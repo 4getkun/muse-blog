@@ -11,7 +11,7 @@
     <div class="side-year">{{ .Key }}年</div>
     {{ range .Pages.GroupByDate "01" }}
       <div class="side-month">{{ int .Key }}月</div>
-      {{ range .Pages.ByDate }}
+      {{ range .Pages.ByDate.Reverse }}
         <a class="side-entry" href="{{ .RelPermalink }}">{{ .Date.Format "2" }}日 {{ .Title }}</a>
       {{ end }}
     {{ end }}
