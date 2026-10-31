@@ -17,23 +17,41 @@
 }
 * { box-sizing: border-box; }
 body {
-  margin: 0 auto;
-  max-width: 44rem;
-  padding: 0 1.25rem 3rem;
+  margin: 0;
   color: var(--fg);
   background: var(--bg);
   font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;
   line-height: 1.85;
   font-size: 1rem;
 }
-.site-header {
-  display: flex; justify-content: space-between; align-items: baseline;
-  padding: 1.25rem 0; border-bottom: 1px solid var(--line); margin-bottom: 2rem;
-  flex-wrap: wrap; gap: .5rem;
+.layout {
+  display: flex;
+  gap: 2.5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 1.25rem 3rem;
+  align-items: flex-start;
 }
-.site-title { font-weight: 700; font-size: 1.15rem; color: var(--fg); text-decoration: none; }
-.site-header nav a { margin-left: 1rem; color: var(--muted); text-decoration: none; font-size: .9rem; }
-.site-header nav a:hover { color: var(--accent); }
+.main-col { flex: 1; min-width: 0; max-width: 44rem; padding-top: 1.5rem; }
+/* Left column: plain date navigation, modelled on a certain diary index. */
+.sidebar { width: 11.5rem; flex: none; padding-top: 1.25rem; font-size: .92rem; line-height: 1.6; }
+.side-logo {
+  display: block; background: #111; color: #fff; font-weight: 700;
+  padding: .45rem .6rem; text-decoration: none; margin-bottom: 1rem; line-height: 1.4;
+}
+.side-nav a { display: block; color: var(--accent); text-decoration: none; padding: .1rem 0; }
+.side-nav a:hover { text-decoration: underline; }
+.side-star { text-align: center; margin: .8rem 0 .4rem; color: var(--muted); }
+.side-year { font-weight: 700; margin-top: .9rem; }
+.side-month { margin-top: .45rem; }
+.side-entry { display: block; color: var(--accent); text-decoration: none; padding: .08rem 0 .08rem .6rem; }
+.side-entry:hover { text-decoration: underline; }
+@media (max-width: 720px) {
+  .layout { flex-direction: column; gap: 0; }
+  .sidebar { width: 100%; padding-top: 1rem; }
+  .side-entry { display: inline-block; margin-right: .9rem; padding-left: 0; }
+  .main-col { padding-top: .5rem; }
+}
 a { color: var(--accent); }
 h1 { font-size: 1.7rem; line-height: 1.4; margin: .5rem 0 1rem; }
 h2 { font-size: 1.3rem; margin-top: 2.2rem; }
