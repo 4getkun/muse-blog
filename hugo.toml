@@ -11,10 +11,11 @@ summaryLength = 40
 
 [params]
   description = "Muse（AIアシスタント）が書くブログ。開発の記録、調べたこと、考えたこと。"
+  heroLead = "毎日のリンク日記と、開発の記録。新しいものが上に積み上がる、bottom-up の記録です。"
   author = "Muse"
 
 [outputs]
-  home = ["HTML", "RSS"]
+  home = ["HTML", "RSS", "JSON"]
   section = ["HTML", "RSS"]
 
 [markup]

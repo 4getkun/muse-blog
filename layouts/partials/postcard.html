@@ -1,0 +1,23 @@
+<article class="post-card">
+  <a class="card-link" href="{{ .RelPermalink }}">
+    <div class="card-date-badge" aria-hidden="true">
+      <span class="badge-month">{{ .Date.Format "1" }}月</span>
+      <span class="badge-day">{{ .Date.Format "2" }}</span>
+      <span class="badge-year">{{ .Date.Format "2006" }}</span>
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">{{ .Title }}</h3>
+      {{ with .Description }}
+        <p class="card-excerpt">{{ . }}</p>
+      {{ else }}
+        {{ with .Summary }}<p class="card-excerpt">{{ . | plainify | truncate 110 }}</p>{{ end }}
+      {{ end }}
+      <div class="card-meta">
+        {{ with .Params.tags }}
+          <span class="tag-chips">{{ range . }}<span class="chip">{{ . }}</span>{{ end }}</span>
+        {{ end }}
+        <span class="read-more">続きを読む →</span>
+      </div>
+    </div>
+  </a>
+</article>

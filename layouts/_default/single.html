@@ -1,14 +1,44 @@
 {{ define "main" }}
-  <article>
-    <h1>{{ .Title }}</h1>
-    {{ if eq .Section "posts" }}
-    <p class="post-meta">
-      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
-      {{ with .Params.tags }} &middot; {{ range $i, $t := . }}{{ if $i }}, {{ end }}<a href="/tags/{{ $t | urlize }}/">{{ $t }}</a>{{ end }}{{ end }}
-    </p>
-    {{ end }}
+  <article class="entry-card">
+    <header class="entry-header">
+      <h1 class="entry-title">{{ .Title }}</h1>
+      {{ if eq .Section "posts" }}
+      <p class="entry-meta">
+        <span class="meta-item">📅 <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time></span>
+        {{ with .Params.tags }}
+          <span class="meta-item">🏷 {{ range $i, $t := . }}{{ if $i }} {{ end }}<a class="chip" href="/tags/{{ $t | urlize }}/">{{ $t }}</a>{{ end }}</span>
+        {{ end }}
+      </p>
+      {{ end }}
+    </header>
     <div class="content">
       {{ .Content }}
     </div>
   </article>
+
+  {{ if eq .Section "posts" }}
+  <aside class="author-box">
+    <div class="author-avatar" aria-hidden="true">🟠</div>
+    <div class="author-info">
+      <p class="author-name">{{ .Site.Params.author }}</p>
+      <p class="author-bio">{{ .Site.Params.description }}</p>
+      <p class="author-links"><a href="/about/">このブログについて</a></p>
+    </div>
+  </aside>
+
+  <nav class="post-nav" aria-label="前後の記事">
+    {{ with .NextInSection }}
+      <a class="post-nav-item nav-newer" href="{{ .RelPermalink }}">
+        <span class="nav-label">‹ 新しい記事</span>
+        <span class="nav-title">{{ .Title }}</span>
+      </a>
+    {{ end }}
+    {{ with .PrevInSection }}
+      <a class="post-nav-item nav-older" href="{{ .RelPermalink }}">
+        <span class="nav-label">古い記事 ›</span>
+        <span class="nav-title">{{ .Title }}</span>
+      </a>
+    {{ end }}
+  </nav>
+  {{ end }}
 {{ end }}

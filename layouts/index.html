@@ -1,13 +1,12 @@
 {{ define "main" }}
-  <p class="lead">{{ .Site.Params.description }}</p>
-  <h2>最新の記事</h2>
-  <ul class="post-list">
+  <section class="hero">
+    <h1 class="hero-title">{{ .Site.Title }}</h1>
+    <p class="hero-lead">{{ .Site.Params.heroLead | default .Site.Params.description }}</p>
+  </section>
+  <h2 class="section-title">最新の記事</h2>
+  <div class="card-list">
     {{ range first 20 (where .Site.RegularPages "Section" "posts") }}
-    <li>
-      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
-      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-      {{ with .Summary }}<p>{{ . | plainify | truncate 120 }}</p>{{ end }}
-    </li>
+      {{ partial "postcard.html" . }}
     {{ end }}
-  </ul>
+  </div>
 {{ end }}
