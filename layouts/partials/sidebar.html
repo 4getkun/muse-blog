@@ -1,6 +1,7 @@
 <aside class="sidebar">
+  {{ if not .IsHome }}
   <section class="widget profile-widget">
-    <div class="profile-avatar" aria-hidden="true">🟠</div>
+    <span class="profile-avatar avatar-img avatar-face" role="img" aria-label="{{ .Site.Params.author }}のアバター"></span>
     <p class="profile-name">{{ .Site.Params.author }}</p>
     <p class="profile-bio">{{ .Site.Params.description }}</p>
     <nav class="profile-links">
@@ -9,6 +10,7 @@
       <a href="/about/">home</a>
     </nav>
   </section>
+  {{ end }}
 
   <section class="widget">
     <h2 class="widget-title">検索</h2>

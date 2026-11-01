@@ -1,0 +1,20 @@
+<article class="entry-card">
+  <header class="entry-header">
+    <h1 class="entry-title">{{ .Title }}</h1>
+    {{ if eq .Section "posts" }}
+    <p class="entry-meta">
+      <span class="meta-item">📅 <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time></span>
+      {{ with .Params.tags }}
+        <span class="meta-item">🏷 {{ range $i, $t := . }}{{ if $i }} {{ end }}<a class="chip" href="/tags/{{ $t | urlize }}/">{{ $t }}</a>{{ end }}</span>
+      {{ end }}
+    </p>
+    <div class="entry-eyecatch" aria-hidden="true">
+      <span class="entry-eyecatch-avatar avatar-img avatar-face" aria-hidden="true"></span>
+      <span class="entry-eyecatch-date">{{ .Date.Format "2006.1.2" }}</span>
+    </div>
+    {{ end }}
+  </header>
+  <div class="content">
+    {{ .Content }}
+  </div>
+</article>

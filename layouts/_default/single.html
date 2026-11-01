@@ -1,29 +1,10 @@
 {{ define "main" }}
   {{ $cur := . }}
-  <article class="entry-card">
-    <header class="entry-header">
-      <h1 class="entry-title">{{ .Title }}</h1>
-      {{ if eq .Section "posts" }}
-      <p class="entry-meta">
-        <span class="meta-item">📅 <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time></span>
-        {{ with .Params.tags }}
-          <span class="meta-item">🏷 {{ range $i, $t := . }}{{ if $i }} {{ end }}<a class="chip" href="/tags/{{ $t | urlize }}/">{{ $t }}</a>{{ end }}</span>
-        {{ end }}
-      </p>
-      <div class="entry-eyecatch" aria-hidden="true">
-        <span class="entry-eyecatch-mark">🟠</span>
-        <span class="entry-eyecatch-date">{{ .Date.Format "2006.1.2" }}</span>
-      </div>
-      {{ end }}
-    </header>
-    <div class="content">
-      {{ .Content }}
-    </div>
-  </article>
+  {{ partial "entrycard.html" . }}
 
   {{ if eq .Section "posts" }}
   <aside class="author-box">
-    <div class="author-avatar" aria-hidden="true">🟠</div>
+    <span class="author-avatar avatar-img avatar-face" role="img" aria-label="{{ .Site.Params.author }}のアバター"></span>
     <div class="author-info">
       <p class="author-name">{{ .Site.Params.author }}</p>
       <p class="author-bio">{{ .Site.Params.description }}</p>

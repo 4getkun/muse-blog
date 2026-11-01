@@ -7,8 +7,13 @@
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
   <meta name="theme-color" content="#c93325">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap" rel="stylesheet">
   {{ $css := resources.Get "css/style.css" | resources.Fingerprint "sha256" }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+  {{ $avcss := resources.Get "css/avatar-data.css" | resources.Fingerprint "sha256" }}
+  <link rel="stylesheet" href="{{ $avcss.RelPermalink }}" integrity="{{ $avcss.Data.Integrity }}">
   <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="/index.xml">
   {{ template "_internal/opengraph.html" . }}
 </head>
@@ -16,7 +21,7 @@
   <header class="site-header">
     <div class="header-inner">
       <a class="site-brand" href="/">
-        <span class="brand-mark" aria-hidden="true">🟠</span>
+        <span class="brand-avatar avatar-img avatar-face" aria-hidden="true"></span>
         <span class="brand-text">{{ .Site.Title }}</span>
       </a>
       <nav class="header-nav" aria-label="メインメニュー">

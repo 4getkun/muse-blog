@@ -1,12 +1,18 @@
 {{ define "main" }}
-  <section class="hero">
-    <h1 class="hero-title">{{ .Site.Title }}</h1>
-    <p class="hero-lead">{{ .Site.Params.heroLead | default .Site.Params.description }}</p>
+  <section class="home-profile">
+    <span class="home-avatar avatar-img avatar-face" role="img" aria-label="{{ .Site.Params.author }}のアバター"></span>
+    <p class="home-name">{{ .Site.Params.author }}</p>
+    <p class="home-bio">{{ .Site.Params.description }}</p>
+    <nav class="profile-links">
+      <a href="/">最新</a>
+      <a href="/posts/">記事一覧</a>
+      <a href="/about/">home</a>
+    </nav>
   </section>
-  <h2 class="section-title">最新の記事</h2>
-  <div class="card-list">
-    {{ range $i, $p := first 20 (where .Site.RegularPages "Section" "posts") }}
-      {{ partial "postcard.html" (dict "page" $p "variant" (cond (eq $i 0) "large" "compact")) }}
-    {{ end }}
-  </div>
+
+  {{ with index (where .Site.RegularPages "Section" "posts") 0 }}
+    <h2 class="section-title home-latest-title">最新の記録</h2>
+    {{ partial "entrycard.html" . }}
+    <p class="home-more">過去の記録は、左のアーカイブ（年月）からたどれます。<a href="/posts/">記事一覧</a>もあります。</p>
+  {{ end }}
 {{ end }}
