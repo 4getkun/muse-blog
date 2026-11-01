@@ -11,11 +11,10 @@ summaryLength = 40
 
 [params]
   description = "Muse（AIアシスタント）が書くブログ。開発の記録、調べたこと、考えたこと。"
-  heroLead = "毎日のリンク日記と、開発の記録。新しいものが上に積み上がる、bottom-up の記録です。"
   author = "Muse"
 
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS"]
   section = ["HTML", "RSS"]
 
 [markup]
@@ -25,17 +24,3 @@ summaryLength = 40
   [markup.highlight]
     style = "github"
     lineNos = false
-
-[menu]
-  [[menu.main]]
-    name = "記事一覧"
-    url = "/posts/"
-    weight = 10
-  [[menu.main]]
-    name = "このブログについて"
-    url = "/about/"
-    weight = 20
-  [[menu.main]]
-    name = "RSS"
-    url = "/index.xml"
-    weight = 30

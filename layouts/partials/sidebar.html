@@ -1,65 +1,26 @@
 <aside class="sidebar">
-  {{ if not .IsHome }}
-  <section class="widget profile-widget">
-    <span class="profile-avatar avatar-img avatar-face" role="img" aria-label="{{ .Site.Params.author }}のアバター"></span>
-    <p class="profile-name">{{ .Site.Params.author }}</p>
-    <p class="profile-bio">{{ .Site.Params.description }}</p>
-    <nav class="profile-links">
-      <a href="/">最新</a>
-      <a href="/posts/">記事一覧</a>
-      <a href="/about/">home</a>
-    </nav>
-  </section>
-  {{ end }}
-
-  <section class="widget">
-    <h2 class="widget-title">検索</h2>
-    <form class="widget-search" action="/search/" method="get" role="search">
-      <input type="search" name="q" placeholder="キーワード" aria-label="サイト内検索">
-      <button type="submit">検索</button>
-    </form>
-  </section>
-
-  <section class="widget">
-    <h2 class="widget-title">アーカイブ</h2>
-    <div class="side-star">＊</div>
-    {{ $posts := where .Site.RegularPages "Section" "posts" }}
-    {{ $nowY := now.Format "2006" }}
-    {{ $nowM := now.Format "01" }}
-    {{ range $posts.GroupByDate "2006" }}
-      <div class="side-year">{{ .Key }}年</div>
-      {{ $year := .Key }}
-      {{ range .Pages.GroupByDate "01" }}
-        <details class="side-month-block"{{ if and (eq $year $nowY) (eq .Key $nowM) }} open{{ end }}>
-          <summary class="side-month">{{ int .Key }}月<span class="side-count">{{ len .Pages }}</span></summary>
-          {{ range .Pages.ByDate.Reverse }}
-            <a class="side-entry" href="{{ .RelPermalink }}">{{ .Date.Format "2" }}日 {{ .Title }}</a>
-          {{ end }}
-        </details>
-      {{ end }}
+  <a class="side-logo" href="/">
+    <span class="side-logo-avatar avatar-img avatar-face" aria-hidden="true"></span>
+    <span class="side-logo-text">{{ .Site.Title }}</span>
+  </a>
+  <nav class="side-links">
+    <a href="/">最新</a>
+    <a href="https://fourgetkun.com/">home</a>
+  </nav>
+  <div class="side-star">＊</div>
+  {{ $posts := where .Site.RegularPages "Section" "posts" }}
+  {{ $nowY := now.Format "2006" }}
+  {{ $nowM := now.Format "01" }}
+  {{ range $posts.GroupByDate "2006" }}
+    <div class="side-year">{{ .Key }}年</div>
+    {{ $year := .Key }}
+    {{ range .Pages.GroupByDate "01" }}
+      <details class="side-month-block"{{ if and (eq $year $nowY) (eq .Key $nowM) }} open{{ end }}>
+        <summary class="side-month">{{ int .Key }}月<span class="side-count">{{ len .Pages }}</span></summary>
+        {{ range .Pages.ByDate.Reverse }}
+          <a class="side-entry" href="{{ .RelPermalink }}">{{ .Date.Format "2" }}日 {{ .Title }}</a>
+        {{ end }}
+      </details>
     {{ end }}
-  </section>
-
-  <section class="widget">
-    <h2 class="widget-title">最近の投稿</h2>
-    <ul class="recent-list">
-      {{ range first 5 (where .Site.RegularPages "Section" "posts") }}
-        <li>
-          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006年1月2日" }}</time>
-        </li>
-      {{ end }}
-    </ul>
-  </section>
-
-  {{ with .Site.Taxonomies.tags }}
-  <section class="widget">
-    <h2 class="widget-title">タグ</h2>
-    <div class="tag-chips">
-      {{ range $name, $taxonomy := . }}
-        <a class="chip" href="/tags/{{ $name | urlize }}/">{{ $name }}<span class="chip-count">{{ len $taxonomy }}</span></a>
-      {{ end }}
-    </div>
-  </section>
   {{ end }}
 </aside>
