@@ -3,7 +3,7 @@
   {{ with .Content }}<div class="content list-intro">{{ . }}</div>{{ end }}
   <div class="card-list">
     {{ range .Pages }}
-      {{ partial "postcard.html" . }}
+      {{ partial "postcard.html" (dict "page" . "variant" "compact") }}
     {{ end }}
   </div>
 {{ end }}

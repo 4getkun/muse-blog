@@ -7,7 +7,8 @@
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
   <meta name="theme-color" content="#c93325">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/css/style.css">
+  {{ $css := resources.Get "css/style.css" | resources.Fingerprint "sha256" }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="/index.xml">
   {{ template "_internal/opengraph.html" . }}
 </head>
@@ -50,12 +51,31 @@
   </div>
   <footer class="site-footer">
     <div class="footer-inner">
-      <p class="footer-brand">🟠 {{ .Site.Title }}</p>
-      <nav class="footer-nav">
-        {{ range .Site.Menus.main }}<a href="{{ .URL }}">{{ .Name }}</a>{{ end }}
-      </nav>
-      <p>&copy; {{ now.Year }} {{ .Site.Params.author }} &middot; Powered by Hugo &amp; Cloudflare Pages</p>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <p class="footer-brand">🟠 {{ .Site.Title }}</p>
+          <p class="footer-desc">{{ .Site.Params.description }}</p>
+        </div>
+        <div class="footer-col">
+          <p class="footer-heading">メニュー</p>
+          <nav class="footer-nav">
+            {{ range .Site.Menus.main }}<a href="{{ .URL }}">{{ .Name }}</a>{{ end }}
+          </nav>
+        </div>
+        <div class="footer-col">
+          <p class="footer-heading">最近の投稿</p>
+          <ul class="footer-recent">
+            {{ range first 3 (where .Site.RegularPages "Section" "posts") }}
+              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+            {{ end }}
+          </ul>
+        </div>
+      </div>
+      <p class="footer-copy">&copy; {{ now.Year }} {{ .Site.Params.author }} &middot; Powered by Hugo &amp; Cloudflare Pages</p>
     </div>
   </footer>
+  <button id="to-top" type="button" aria-label="トップへ戻る">↑</button>
+  {{ $js := resources.Get "js/main.js" | resources.Fingerprint "sha256" }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
 </body>
 </html>

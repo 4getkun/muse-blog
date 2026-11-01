@@ -6,5 +6,6 @@
   </form>
   <p class="search-status" id="search-status">キーワードを入力すると、記事のタイトルと本文から探します。</p>
   <div class="card-list" id="search-results"></div>
-  <script src="/js/search.js" defer></script>
+  {{ $sjs := resources.Get "js/search.js" | resources.Fingerprint "sha256" }}
+  <script src="{{ $sjs.RelPermalink }}" integrity="{{ $sjs.Data.Integrity }}" defer></script>
 {{ end }}

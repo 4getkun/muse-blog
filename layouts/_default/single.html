@@ -1,4 +1,5 @@
 {{ define "main" }}
+  {{ $cur := . }}
   <article class="entry-card">
     <header class="entry-header">
       <h1 class="entry-title">{{ .Title }}</h1>
@@ -9,6 +10,10 @@
           <span class="meta-item">🏷 {{ range $i, $t := . }}{{ if $i }} {{ end }}<a class="chip" href="/tags/{{ $t | urlize }}/">{{ $t }}</a>{{ end }}</span>
         {{ end }}
       </p>
+      <div class="entry-eyecatch" aria-hidden="true">
+        <span class="entry-eyecatch-mark">🟠</span>
+        <span class="entry-eyecatch-date">{{ .Date.Format "2006.1.2" }}</span>
+      </div>
       {{ end }}
     </header>
     <div class="content">
@@ -40,5 +45,23 @@
       </a>
     {{ end }}
   </nav>
+
+  {{ $related := slice }}
+  {{ with .Params.tags }}
+    {{ $t := index . 0 }}
+    {{ range where $cur.Site.RegularPages "Section" "posts" }}
+      {{ if and (ne .RelPermalink $cur.RelPermalink) .Params.tags (in .Params.tags $t) }}
+        {{ $related = $related | append . }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+  {{ with first 3 $related }}
+  <section class="related">
+    <h2 class="section-title">関連記事</h2>
+    <div class="card-list">
+      {{ range . }}{{ partial "postcard.html" (dict "page" . "variant" "compact") }}{{ end }}
+    </div>
+  </section>
+  {{ end }}
   {{ end }}
 {{ end }}

@@ -1,21 +1,24 @@
-<article class="post-card">
-  <a class="card-link" href="{{ .RelPermalink }}">
-    <div class="card-date-badge" aria-hidden="true">
-      <span class="badge-month">{{ .Date.Format "1" }}月</span>
-      <span class="badge-day">{{ .Date.Format "2" }}</span>
-      <span class="badge-year">{{ .Date.Format "2006" }}</span>
+{{ $p := .page }}
+{{ $v := .variant | default "compact" }}
+<article class="post-card card-{{ $v }}">
+  <a class="card-link" href="{{ $p.RelPermalink }}">
+    <div class="card-eyecatch" aria-hidden="true">
+      {{ with $p.Params.tags }}<span class="eyecatch-chip">{{ index . 0 }}</span>{{ end }}
+      <span class="eyecatch-center">
+        <span class="eyecatch-day">{{ $p.Date.Format "2" }}</span>
+        <span class="eyecatch-ym">{{ $p.Date.Format "2006.1" }}</span>
+      </span>
+      <span class="eyecatch-mark">🟠</span>
     </div>
     <div class="card-body">
-      <h3 class="card-title">{{ .Title }}</h3>
-      {{ with .Description }}
+      <h3 class="card-title">{{ $p.Title }}</h3>
+      {{ with $p.Description }}
         <p class="card-excerpt">{{ . }}</p>
       {{ else }}
-        {{ with .Summary }}<p class="card-excerpt">{{ . | plainify | truncate 110 }}</p>{{ end }}
+        {{ with $p.Summary }}<p class="card-excerpt">{{ . | plainify | truncate (cond (eq $v "large") 150 110) }}</p>{{ end }}
       {{ end }}
       <div class="card-meta">
-        {{ with .Params.tags }}
-          <span class="tag-chips">{{ range . }}<span class="chip">{{ . }}</span>{{ end }}</span>
-        {{ end }}
+        <span class="meta-date">📅 {{ $p.Date.Format "2006年1月2日" }}</span>
         <span class="read-more">続きを読む →</span>
       </div>
     </div>

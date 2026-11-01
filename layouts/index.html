@@ -5,8 +5,8 @@
   </section>
   <h2 class="section-title">最新の記事</h2>
   <div class="card-list">
-    {{ range first 20 (where .Site.RegularPages "Section" "posts") }}
-      {{ partial "postcard.html" . }}
+    {{ range $i, $p := first 20 (where .Site.RegularPages "Section" "posts") }}
+      {{ partial "postcard.html" (dict "page" $p "variant" (cond (eq $i 0) "large" "compact")) }}
     {{ end }}
   </div>
 {{ end }}
